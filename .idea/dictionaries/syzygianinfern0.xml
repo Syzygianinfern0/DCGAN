@@ -7,8 +7,10 @@
       <w>dataloader</w>
       <w>dataroot</w>
       <w>datasets</w>
+      <w>dilations</w>
       <w>dset</w>
       <w>imgs</w>
+      <w>paddings</w>
       <w>vutils</w>
     </words>
   </dictionary>
