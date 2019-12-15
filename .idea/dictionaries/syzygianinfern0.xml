@@ -11,6 +11,7 @@
       <w>dset</w>
       <w>imgs</w>
       <w>paddings</w>
+      <w>relu</w>
       <w>vutils</w>
     </words>
   </dictionary>
