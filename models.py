@@ -68,10 +68,10 @@ class Discriminator(nn.Module):
         blocks.append(self.trans_conv_block(channels[-2], channels[-1], strides[-1],
                                             paddings[-1], act='sigmoid', bn=bns[-1]))
 
-        self.disciminator = nn.Sequential(*list(blocks))
+        self.discriminator = nn.Sequential(*list(blocks))
 
     def forward(self, x):
-        return self.disciminator(x)
+        return self.discriminator(x)
 
     @staticmethod
     def trans_conv_block(in_c, out_c, stride, padding, act='relu', bn=True, *args, **kwargs):
@@ -82,18 +82,18 @@ class Discriminator(nn.Module):
                               stride=stride, padding=padding,
                               bias=False, *args, **kwargs),
                     nn.BatchNorm2d(out_c),
-                    nn.LeakyReLU()
+                    nn.LeakyReLU(0.2)
                 )
             else:
                 return nn.Sequential(
                     nn.Conv2d(in_c, out_c, kernel_size=4,
                               stride=stride, padding=padding,
                               bias=False, *args, **kwargs),
-                    nn.LeakyReLU()
+                    nn.LeakyReLU(0.2)
                 )
         elif act.lower() == 'sigmoid':
             return nn.Sequential(
-                nn.ConvTranspose2d(in_c, out_c, kernel_size=4,
+                nn.Conv2d(in_c, out_c, kernel_size=4,
                                    stride=stride, padding=padding,
                                    bias=False, *args, **kwargs),
                 nn.Sigmoid()
