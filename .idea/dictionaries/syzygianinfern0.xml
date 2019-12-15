@@ -10,6 +10,8 @@
       <w>dilations</w>
       <w>dset</w>
       <w>imgs</w>
+      <w>iters</w>
+      <w>optim</w>
       <w>paddings</w>
       <w>relu</w>
       <w>vutils</w>

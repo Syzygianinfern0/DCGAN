@@ -68,7 +68,7 @@ class Discriminator(nn.Module):
         blocks.append(self.trans_conv_block(channels[-2], channels[-1], strides[-1],
                                             paddings[-1], act='sigmoid', bn=bns[-1]))
 
-        self.generator = nn.Sequential(*list(blocks))
+        self.disciminator = nn.Sequential(*list(blocks))
 
     def forward(self, x):
         return self.disciminator(x)
@@ -100,16 +100,17 @@ class Discriminator(nn.Module):
             )
 
 
-netG: nn.Module = Generator()
-netG.to(device)
-if device.type == 'cuda':
-    netG = nn.DataParallel(netG, [0])
-netG.apply(weights_init)
-print(netG)
+if __name__ == '__main__':
+    netG: nn.Module = Generator()
+    netG.to(device)
+    if device.type == 'cuda':
+        netG = nn.DataParallel(netG, [0])
+    netG.apply(weights_init)
+    print(netG)
 
-netD: nn.Module = Discriminator()
-netD.to(device)
-if device.type == 'cuda':
-    netG = nn.DataParallel(netD, [0])
-netD.apply(weights_init)
-print(netD)
+    netD: nn.Module = Discriminator()
+    netD.to(device)
+    if device.type == 'cuda':
+        netG = nn.DataParallel(netD, [0])
+    netD.apply(weights_init)
+    print(netD)

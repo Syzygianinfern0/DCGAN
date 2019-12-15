@@ -8,9 +8,10 @@ import torchvision.utils as vutils
 from config import *
 
 
-def load_imgs(show_imgs: bool = True) -> torch.utils.data.DataLoader:
+def load_imgs(show_imgs: bool = True, subset=None) -> torch.utils.data.DataLoader:
     """
     Reads the images from the data dir specified in config.py
+    :param subset: Number of images to take from the dataset
     :param show_imgs: Flag to display a sample of images
     :return: Dataloader containing the images
     """
@@ -22,6 +23,8 @@ def load_imgs(show_imgs: bool = True) -> torch.utils.data.DataLoader:
                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
                                ]))
 
+    if subset:
+        dataset = torch.utils.data.Subset(dataset, list(range(subset)))
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
                                              shuffle=True, num_workers=workers)
     if show_imgs:
@@ -38,4 +41,5 @@ def load_imgs(show_imgs: bool = True) -> torch.utils.data.DataLoader:
     return dataloader
 
 
-load_imgs()
+if __name__ == '__main__':
+    dataloader = load_imgs(subset=1000)
