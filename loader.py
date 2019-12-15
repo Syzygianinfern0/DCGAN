@@ -8,7 +8,7 @@ import torchvision.utils as vutils
 from config import *
 
 
-def load_imgs(show_imgs=True):
+def load_imgs(show_imgs: bool = True) -> torch.utils.data.DataLoader:
     """
     Reads the images from the data dir specified in config.py
     :param show_imgs: Flag to display a sample of images
