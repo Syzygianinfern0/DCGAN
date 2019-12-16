@@ -26,11 +26,12 @@ def main():
     net_d: nn.Module = Discriminator()
     net_d.to(device)
     if device.type == 'cuda':
-        net_g = nn.DataParallel(net_d, [0])
+        net_d = nn.DataParallel(net_d, [0])
     net_d.apply(weights_init)
     # print(net_d)
 
-    dataloader = load_imgs(subset=5000)
+    # dataloader = load_imgs(subset=5000)
+    dataloader = load_imgs()
 
     #######################################
     # ~~~~~~ OPTIMIZERS AND LOSSES ~~~~~~ #
@@ -129,6 +130,9 @@ def main():
                 print('[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f'
                       % (epoch, num_epochs, i, len(dataloader),
                          err_d.item(), err_g.item(), d_x, d_g_z1, d_g_z2))
+                writer.add_scalar('val/d_x', d_x, iters)
+                writer.add_scalar('val/d_g_z1', d_g_z1, iters)
+                writer.add_scalar('val/d_g_z2', d_g_z2, iters)
 
             # Save Losses for plotting later
             g_losses.append(err_g.item())
@@ -142,7 +146,7 @@ def main():
                 with torch.no_grad():
                     fake = net_g(fixed_noise).detach().cpu()
                 img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
-                writer.add_image('generated', fake, iters)
+                writer.add_images('generated', fake, iters)
             iters += 1
 
 
