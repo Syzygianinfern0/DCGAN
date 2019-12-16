@@ -149,6 +149,9 @@ def main():
                 writer.add_images('generated', fake, iters)
             iters += 1
 
+    torch.save(net_d.state_dict(), 'trained/discriminator.pth')
+    torch.save(net_g.state_dict(), 'trained/generator.pth')
+
 
 if __name__ == '__main__':
     main()
